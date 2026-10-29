@@ -12,21 +12,21 @@ import {
   CardMedia
 } from "@mui/material";
 import img_background from "../../../src/assets/fonts/images/landpage-bg-image.jpg";
-import features from "./features.json"
+import features from "./features.json";
+import { Footer } from "../../components";
 
 export default function Landpage() {
   const { t } = useTranslation("web");
-  const currentDate = new Date();
-  const Year = `${currentDate.getFullYear()}`;
+
   return (
-    <Box sx={{ bgcolor: 'common.white', minHeight: '100vh' }}>
+    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <AppBar
         position="sticky"
         elevation={0}
         sx={{
-          bgcolor: 'white',
+          bgcolor: 'background.paper',
           borderBottom: '1px solid',
-          borderColor: 'grey.200'
+          borderColor: 'divider'
         }}
       >
         <Toolbar>
@@ -90,14 +90,14 @@ export default function Landpage() {
         </Container>
       </Box>
 
-      <Box component="main" sx={{ py: 10 }}>
+      <Box component="main" sx={{ py: 10, flexGrow: 1 }}>
 
         <Container>
           <Box textAlign="center" mb={8}>
             <Typography variant="h3" component="h2" color="primary.dark" gutterBottom sx={{ textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}>
               Características Principales
             </Typography>
-            <Typography variant="subtitle1" color="text.secondary" sx={{ maxWidth: '700px', py: 1, mb: 10 }}>
+            <Typography variant="subtitle1" color="text.secondary" sx={{ maxWidth: '700px', py: 1, mb: 10, mx: 'auto' }}>
               Nuestro sistema propone una serie de opciones para la gestión de su empresa, cubriendo las necesidades básicas administrativas y a su vez encaminando a la digitalización de su negocio. Permitiendo no solo despreocuparse en dónde y cómo va a guardar sus datos, sino que podrá acceder a ellos desde cualquier lugar y en cualquier momento.
             </Typography>
           </Box>
@@ -120,10 +120,11 @@ export default function Landpage() {
                   maxWidth: '240px',
                   minWidth: '180px',
                   border: '1px solid',
-                  borderColor: 'grey.200',
+                  borderColor: 'divider',
+                  bgcolor: 'background.paper',
                   display: 'flex',
                   flexDirection: 'column',
-                  textAlign: 'cente   ',
+                  textAlign: 'center',
                   transition: 'transform 0.2s',
                   '&:hover': { transform: 'translateY(-5px)', boxShadow: 3 }
                 }}
@@ -133,7 +134,6 @@ export default function Landpage() {
                   image={`${feature.img}-${feature.id}.png`}
                   alt={`Feature ${feature.id}`}
                   sx={{ height: '120px', width: '100%', objectFit: 'contain', p: 2, bgcolor: 'transparent' }}
-
                 />
                 <CardContent sx={{ flexGrow: 1, p: 2 }}>
                   <Typography variant="h6" color="primary.main" fontWeight="bold" gutterBottom sx={{ fontSize: '1.1rem' }}>
@@ -148,9 +148,9 @@ export default function Landpage() {
           </Box>
         </Container>
 
-        <Box sx={{ bgcolor: 'primary.50', py: 8, mt: 10 }}>
+        <Box sx={{ bgcolor: 'action.hover', py: 8, mt: 10 }}>
           <Container>
-            <Typography variant="h4" sx={{ mb: 5 }}>Ventajas al usar nuestro ERP</Typography>
+            <Typography variant="h4" sx={{ mb: 5, textAlign: 'center' }}>Ventajas al usar nuestro ERP</Typography>
             <Typography variant="body1" color="text.primary" align="center" sx={{ lineHeight: 1.8 }}>
               La versatilidad de nuestro sistema le permitirá alcanzar los objetivos de su organización. Diseñado bajo los pilares de la simplicidad y la rapidez, podrá monitorear el rendimiento de su equipo al día, gestionar su facturación y obtener una vista panorámica de todo su negocio.
             </Typography>
@@ -159,21 +159,7 @@ export default function Landpage() {
 
       </Box>
 
-      <Box
-        component="footer"
-        sx={{
-          bgcolor: 'primary.dark',
-          color: 'white',
-          py: 4,
-          textAlign: 'center'
-        }}
-      >
-        <Typography variant="h6" gutterBottom>Contact</Typography>
-        <Typography>zost.erp.support@gmail.com</Typography>
-        <Typography variant="body2" sx={{ opacity: 0.8 }}>
-          &copy; {Year} Fiscella&Asociados. All rights reserved.
-        </Typography>
-      </Box>
+      <Footer />
     </Box>
   );
 }

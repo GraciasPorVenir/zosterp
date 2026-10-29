@@ -7,11 +7,10 @@ import {
   Button, 
   Box 
 } from "@mui/material";
+import { Footer } from "../../components";
 
 export default function ERP() {
   const { t } = useTranslation("web");
-  const currentDate = new Date();
-  const Year = `${currentDate.getFullYear()}`;
 
   return (
     // Contenedor principal que abarca toda la pantalla
@@ -20,7 +19,7 @@ export default function ERP() {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        bgcolor: "grey.50",
+        bgcolor: "background.default",
       }}
     >
       {/* --- HEADER --- */}
@@ -28,9 +27,9 @@ export default function ERP() {
         position="sticky"
         elevation={0}
         sx={{
-          bgcolor: 'white',
+          bgcolor: 'background.paper',
           borderBottom: '1px solid',
-          borderColor: 'grey.200'
+          borderColor: 'divider'
         }}
       >
         <Toolbar>
@@ -80,23 +79,8 @@ export default function ERP() {
         <Outlet />
       </Box>
 
-      {/* --- FOOTER --- */}
-      <Box
-        component="footer"
-        sx={{
-          bgcolor: 'primary.dark',
-          color: 'white',
-          py: 4,
-          textAlign: 'center',
-          mt: 'auto'
-        }}
-      >
-        <Typography variant="h6" gutterBottom>Contact</Typography>
-        <Typography>zost.erp.support@gmail.com</Typography>
-        <Typography variant="body2" sx={{ opacity: 0.8 }}>
-          &copy; {Year} Fiscella&Asociados. All rights reserved.
-        </Typography>
-      </Box>
+      {/* --- FOOTER COMPARTIDO CON TOGGLE CLARO/OSCURO --- */}
+      <Footer />
     </Box>
   );
 }

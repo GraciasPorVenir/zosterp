@@ -1,28 +1,25 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Form, Input } from "../../components";
+import { Form, Input, Footer } from "../../components";
 import { loginSchema } from "@repo/schemas";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, AppBar, Toolbar, Typography, Paper, Alert, Button } from "@mui/material";
+import { Box, AppBar, Toolbar, Typography, Paper } from "@mui/material";
 import { useAuth } from "../../providers";
 
 export default function Login() {
   const { login } = useAuth();
   const { t } = useTranslation("web");
-  const date = new Date();
-  const Year = `${date.getFullYear()}`;
   const navigate = useNavigate();
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [credentialError, setCredentialError] = useState(false);
 
   const handleSubmit = async (data) => {
     try {
-      setErrorMsg(null);
+      setCredentialError(false);
       await login(data);
       navigate("/erp");
     } catch (error) {
-      setErrorMsg(error.message);
-      throw error
+      setCredentialError(true);
+      throw error;
     }
   };
 
@@ -32,16 +29,16 @@ export default function Login() {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        bgcolor: "grey.50",
+        bgcolor: "background.default",
       }}
     >
       <AppBar
         position="static"
         elevation={0}
         sx={{
-          bgcolor: "white",
+          bgcolor: "background.paper",
           borderBottom: "1px solid",
-          borderColor: "grey.200",
+          borderColor: "divider",
         }}
       >
         <Toolbar>
@@ -84,15 +81,24 @@ export default function Login() {
             Login
           </Typography>
 
-          {errorMsg && (
-            <Alert severity="error" sx={{ mb: 3 }}>
-              {errorMsg}
-            </Alert>
-          )}
-
-          <Form schema={loginSchema} handler={handleSubmit}>
-            <Input name={"email"} />
-            <Input name={"password"} type="password" />
+          <Form 
+            schema={loginSchema} 
+            handler={handleSubmit}
+            onValuesChange={() => {
+              if (credentialError) setCredentialError(false);
+            }}
+          >
+            <Input 
+              name={"email"} 
+              label="Usuario / Correo electrónico"
+              externalError={credentialError ? "invalid_credentials" : null} 
+            />
+            <Input 
+              name={"password"} 
+              label="Contraseña"
+              type="password" 
+              externalError={credentialError ? "invalid_credentials" : null} 
+            />
           </Form>
 
           <Box
@@ -101,7 +107,7 @@ export default function Login() {
               flexDirection: "column",
               alignItems: "center",
               gap: 1.5,
-              mt: 1,
+              mt: 2,
             }}
           >
             <Link
@@ -109,7 +115,7 @@ export default function Login() {
               style={{
                 textDecoration: "none",
                 color: "#1976d2",
-                fontSize: "1.2rem",
+                fontSize: "1.05rem",
               }}
             >
               Registro de usuario
@@ -119,7 +125,7 @@ export default function Login() {
               style={{
                 textDecoration: "none",
                 color: "#1976d2",
-                fontSize: "1.2rem",
+                fontSize: "1.05rem",
               }}
             >
               Recuperación de contraseña
@@ -128,23 +134,7 @@ export default function Login() {
         </Paper>
       </Box>
 
-      <Box
-        component="footer"
-        sx={{
-          bgcolor: "primary.dark",
-          color: "white",
-          py: 4,
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h6" gutterBottom>
-          Contact
-        </Typography>
-        <Typography>zost.erp.support@gmail.com</Typography>
-        <Typography variant="body2" sx={{ opacity: 0.8 }}>
-          &copy; {Year} Fiscella&Asociados. All rights reserved.
-        </Typography>
-      </Box>
+      <Footer />
     </Box>
   );
 }
