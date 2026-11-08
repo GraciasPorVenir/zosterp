@@ -56,11 +56,11 @@ export default function WorkerInvitation() {
                 </Box>
 
                 <Form handler={handleAcceptInvitation} schema={insertUserSchema}>
-                    <Input name="name" />
-                    <Input name="surname" />
-                    <Input name="email" />
-                    <Input name="password" />
-                    <Input name={"confirmPassword"} type="password" />
+                    <Input name="name" label={"Nombre"}/>
+                    <Input name="surname" label={"Apellido"}/>
+                    <Input name="email" label={"Correo electrónico"}/>
+                    <Input name="password" label={"Contraseña"}/>
+                    <Input name={"confirmPassword"} type="password" label={"Confirmar contraseña"}/>
                 </Form>
 
             </Paper>

@@ -32,7 +32,7 @@ export const CompanyProvider = ({ children }) => {
   const fetchCompanies = useCallback(async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${API_URL}`, { 
+      const response = await fetch(`${API_URL}`, {
         method: "GET",
         credentials: "include",
       });
@@ -56,7 +56,7 @@ export const CompanyProvider = ({ children }) => {
       });
       if (!response.ok) throw new Error("Error al crear la empresa");
       const jsonResponse = await response.json();
-      
+
       if (jsonResponse.data) {
         setCompanies((prev) => [...prev, jsonResponse.data]);
       }
@@ -70,16 +70,16 @@ export const CompanyProvider = ({ children }) => {
   const updateCompany = useCallback(async (companyId, payload) => {
     try {
       const response = await fetch(`${API_URL}/${companyId}`, {
-        method: "PATCH", 
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(payload),
       });
       if (!response.ok) throw new Error("Error al actualizar la empresa");
       const jsonResponse = await response.json();
-      
-      setCompanies((prev) => prev.map(c => c.id === companyId ? jsonResponse.data : c));
-      
+
+      setCompanies((prev) => prev.map(c => c.id === companyId ? { ...c, ...payload } : c));
+
       setCurrentCompany((prev) => {
         if (prev?.id === companyId) {
           localStorage.setItem("currentCompany", JSON.stringify(jsonResponse.data));
@@ -102,9 +102,9 @@ export const CompanyProvider = ({ children }) => {
         credentials: "include",
       });
       if (!response.ok) throw new Error("Error al eliminar la empresa");
-      
+
       setCompanies((prev) => prev.filter(c => c.id !== companyId));
-      
+
       setCurrentCompany((prev) => {
         if (prev?.id === companyId) {
           localStorage.removeItem("currentCompany");

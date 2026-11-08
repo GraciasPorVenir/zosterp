@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Card } from "../../components";
 import { companySchema } from "@repo/schemas";
@@ -16,16 +15,13 @@ import {
   Toolbar,
   Avatar,
   Chip,
-  Stack
+  Stack,
 } from "@mui/material";
-import MailOutlineIcon from "@mui/icons-material/MailOutlined";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import { useCompany } from "../../providers/CompanyProvider";
-
+import { useAuth } from "../../providers";
 function CompanyForm({ onClose }) {
-  const { t } = useTranslation("web");
   const { createCompany, isLoading } = useCompany();
-
   const handleSubmit = async (data) => {
     try {
       await createCompany(data);
@@ -72,7 +68,7 @@ function CompanyForm({ onClose }) {
 }
 
 export default function Dashboard() {
-  const { t } = useTranslation("web");
+  const { user } = useAuth();
   const [creating, setCreating] = useState(false);
 
   const {
@@ -120,6 +116,7 @@ export default function Dashboard() {
                 companyData={c}
                 onUpdate={handleUpdateCompany}
                 sx={{ height: '100%' }}
+                userRole={user?.Role?.name}
               >
                 <Link to={`/erp/${c.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <Stack spacing={1.5}>

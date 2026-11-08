@@ -17,7 +17,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useCompany } from "../../providers/CompanyProvider";
 
-export default function Card({ id, children, companyData, onMenuClick, onClick }) {
+export default function Card({ id, children, companyData, onMenuClick, onClick, userRole }) {
   const { updateCompany, deleteCompany } = useCompany();
   const contentRef = useRef(null);
 
@@ -26,7 +26,9 @@ export default function Card({ id, children, companyData, onMenuClick, onClick }
   const [formData, setFormData] = useState(companyData || {});
   const [isSaving, setIsSaving] = useState(false);
 
-  const showMenuButton = Boolean(onMenuClick || companyData);
+  const hasOwnerPermissions = userRole === 'Propietario' || userRole === 'owner';
+  
+  const showMenuButton = hasOwnerPermissions && Boolean(onMenuClick || companyData);
 
   const handleOpen = (e) => {
     e.stopPropagation();
